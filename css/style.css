@@ -1,0 +1,219 @@
+/* header #1e202b 
+card-2 #262937
+footer #262936
+card 323544 */
+:root {
+  --cyan: rgb(0, 154, 216);
+  --main-color: #1e202b;
+  --second-color: #323544;
+  --color-2-card: #262937;
+  --color-footer: #262936;
+}
+
+body {
+  /* font-family: sans-serif; */
+  font-family: Roboto, "Open Sans", sans-serif;
+  background-color: var(--main-color);
+}
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+  color: #fff !important;
+}
+
+.logo-title h1 {
+  font-weight: 700;
+  font-size: 16px;
+  color: #ffff;
+}
+
+.logo-title p {
+  font-weight: 300;
+  line-height: 15px;
+  font-size: 10px;
+  color: rgb(191, 193, 200);
+}
+.navbar {
+  background-color: var(--main-color) !important;
+}
+
+.navbar-toggler {
+  border-radius: 50% !important;
+  padding: 15px 10px !important;
+  width: 50px !important;
+  height: 50px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: transparent !important;
+}
+.navbar-toggler i {
+  width: 100%;
+  color: #fff;
+}
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 5px var(--cyan) !important;
+  outline: none !important;
+}
+.navbar-toggler:hover {
+  outline: none !important;
+  /* color: var(--cyan); */
+  box-shadow: 0 0 0 5px var(--cyan) !important;
+}
+.navbar-toggler:focus > i {
+  color: var(--cyan);
+}
+.navbar-toggler:hover > i {
+  color: var(--cyan);
+}
+.navbar-nav {
+  background-color: var(--second-color) !important;
+  border-radius: 5px !important;
+}
+.nav-item {
+  text-align: center;
+  margin-bottom: 15px;
+}
+.nav-item:not(:last-child) {
+  border-bottom: 2px solid #ffffff32;
+}
+.nav-item .nav-link {
+  padding: 2px 20px !important;
+  /* transition:  ; */
+  border: 3px solid transparent;
+  border-radius: 15px;
+}
+.nav-item .nav-link.active {
+  /* border-color: var(--cyan); */
+  color: var(--cyan) !important;
+}
+/* -------------------------- */
+
+.section-header {
+  height: 50vh;
+  background-image: url("../banner.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.form {
+  position: relative;
+}
+.form > input {
+  border: none;
+  padding: 0.9375rem;
+  padding-right: 6.0625rem;
+  background-color: var(--main-color);
+  color: #fff;
+}
+.form > input:focus {
+  box-shadow: none !important;
+  border: none;
+  background-color: var(--main-color);
+  color: #fff;
+}
+.form > button {
+  padding: 12px 29px;
+  margin-right: 2px;
+  color: #fff;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.form > button:hover {
+  color: #fff !important;
+}
+
+.weather {
+  padding-block: 50px;
+  color: #fff;
+  position: relative;
+  padding-inline: .625rem;
+
+  /* min-height: 50vh; */
+}
+
+.custom-row {
+  position: absolute;
+  width: 100%;
+  top: -200px;
+}
+.weather .inner-weather {
+  background-color: var(--second-color);
+}
+.weather .dd {
+  background-color: var(--color-2-card);
+}
+.weather .inner-weather .weather-title {
+  background-color: var(--color-footer);
+}
+.weather .inner-weather .weather-title span {
+  color: rgb(191, 193, 200);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+}
+.weather .inner-weather .weather-content {
+  padding-inline: 15px;
+  padding-block: 15px;
+}
+.weather .inner-weather .weather-content h3 {
+  margin-block: 15px;
+  /* margin-left: 10px; */
+  color: rgb(191, 193, 200);
+  font-weight: 400;
+  line-height: 27px;
+  font-size: 18px;
+}
+.weather .inner-weather .weather-content h4 {
+  font-weight: 700;
+  font-size: 90px;
+  line-height: 135px;
+  /* margin-left: 15px; */
+}
+.weather .inner-weather .weather-content > .status {
+  font-size: 40px;
+  /* margin-left: 20px; */
+}
+.weather .inner-weather .weather-content > .status + span {
+  color: var(--cyan);
+  font-weight: 300;
+  line-height: 21px;
+  font-size: 14px;
+}
+.weather .inner-weather .weather-content > .status + span + .icons {
+}
+/* media Query */
+@media (min-width: 992px) {
+  .nav-item .nav-link.active {
+    border-color: var(--cyan);
+  }
+  .nav-item:hover .nav-link {
+    border-color: var(--cyan);
+    color: var(--cyan) !important;
+  }
+  .nav-item {
+    margin: 10px;
+    border-bottom: none !important;
+  }
+  .navbar-nav {
+    background-color: transparent !important;
+    border-radius: 5px !important;
+  }
+}
+
+/* break Point fo tailwind 
+ sm 640
+ md 768
+ lg 1224
+ xl 1280
+*/
