@@ -181,8 +181,9 @@ a {
   /* margin-left: 15px; */
 }
 .weather .inner-weather .weather-content > .status {
-  font-size: 40px;
+  /* font-size: 40px; */
   /* margin-left: 20px; */
+  width: 60px;
 }
 .weather .inner-weather .weather-content > .status + span {
   color: var(--cyan);
@@ -190,8 +191,7 @@ a {
   line-height: 21px;
   font-size: 14px;
 }
-.weather .inner-weather .weather-content > .status + span + .icons {
-}
+
 /* media Query */
 @media (min-width: 992px) {
   .nav-item .nav-link.active {
