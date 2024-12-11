@@ -99,7 +99,7 @@ a {
 
 .section-header {
   height: 50vh;
-  background-image: url("../banner.png");
+  background-image: url(".././img/banner.png");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -137,7 +137,7 @@ a {
   padding-block: 50px;
   color: #fff;
   position: relative;
-  padding-inline: .625rem;
+  padding-inline: 0.625rem;
 
   /* min-height: 50vh; */
 }
@@ -150,9 +150,7 @@ a {
 .weather .inner-weather {
   background-color: var(--second-color);
 }
-.weather .dd {
-  background-color: var(--color-2-card);
-}
+
 .weather .inner-weather .weather-title {
   background-color: var(--color-footer);
 }
@@ -172,26 +170,39 @@ a {
   color: rgb(191, 193, 200);
   font-weight: 400;
   line-height: 27px;
-  font-size: 18px;
+  font-size: 1.125rem;
 }
 .weather .inner-weather .weather-content h4 {
   font-weight: 700;
-  font-size: 90px;
-  line-height: 135px;
+  font-size: 45px;
+  line-height: 95px;
   /* margin-left: 15px; */
 }
 .weather .inner-weather .weather-content > .status {
-  /* font-size: 40px; */
-  /* margin-left: 20px; */
   width: 60px;
 }
-.weather .inner-weather .weather-content > .status + span {
+.weather .inner-weather .weather-content .status-text {
   color: var(--cyan);
+  display: block;
   font-weight: 300;
   line-height: 21px;
   font-size: 14px;
 }
-
+.c-h5 {
+  line-height: 36px;
+  font-size: 24px;
+  font-weight: 700;
+}
+.c-h6 {
+  color: rgb(191, 193, 200);
+  font-weight: 300;
+  line-height: 24px;
+  font-size: 16px;
+  margin-bottom: 17px;
+}
+.bg-card-2 {
+  background-color: #1e202b !important;
+}
 /* media Query */
 @media (min-width: 992px) {
   .nav-item .nav-link.active {
@@ -208,6 +219,10 @@ a {
   .navbar-nav {
     background-color: transparent !important;
     border-radius: 5px !important;
+  }
+  .weather .inner-weather .weather-content h4 {
+    font-size: 60px;
+    line-height: 135px;
   }
 }
 
