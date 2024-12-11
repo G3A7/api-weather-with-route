@@ -26,7 +26,7 @@ async function getFirstWeather() {
     const country = dataCountry.results[0].components._normalized_city;
 
     const resWeather = await fetch(
-      `http://api.weatherapi.com/v1/forecast.json?key=${apiKeyForWeather}&q=${country}&days=3`
+      `https://api.weatherapi.com/v1/forecast.json?key=${apiKeyForWeather}&q=${country}&days=3`
     );
     const dataWeather = await resWeather.json();
     display(dataWeather);
