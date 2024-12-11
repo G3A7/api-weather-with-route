@@ -3,18 +3,19 @@ const apiKeyForWeather = "363f0ee9576c4499974210006241012";
 const apiKeyForCountry = "398938bba1d540c5a36778155acea436";
 const row = document.querySelector(".custom-row");
 const input = document.querySelector("#search");
-function getLocationUser() {
-  return new Promise((res) => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      res({
-        x: position.coords.latitude,
-        y: position.coords.longitude,
-      });
-    });
-  });
-}
+
 async function getFirstWeather() {
   try {
+    function getLocationUser() {
+      return new Promise((res) => {
+        navigator.geolocation.getCurrentPosition((position) => {
+          res({
+            x: position.coords.latitude,
+            y: position.coords.longitude,
+          });
+        });
+      });
+    }
     const { x, y } = await getLocationUser();
 
     const resCountry = await fetch(
@@ -119,19 +120,6 @@ function display(res) {
 
   row.innerHTML = blackBox;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // console.log(new Date("2024-12-11 00:30"));
 // let c = new Date("2024-12-11 00:30");
