@@ -4,6 +4,8 @@ const apiKeyForCountry = "398938bba1d540c5a36778155acea436";
 const row = document.querySelector(".custom-row");
 const input = document.querySelector("#search");
 
+// https://api.weatherapi.com/v1/current.json?key=363f0ee9576c4499974210006241012&q=London&aqi=no
+
 async function getFirstWeather() {
   try {
     function getLocationUser() {
@@ -17,7 +19,7 @@ async function getFirstWeather() {
       });
     }
     const { x, y } = await getLocationUser();
-    console.log(x,y)
+    console.log(x, y);
 
     const resCountry = await fetch(
       `https://api.opencagedata.com/geocode/v1/json?q=${x}+${y}&key=${apiKeyForCountry}&language=en`
@@ -26,7 +28,7 @@ async function getFirstWeather() {
     const country = dataCountry.results[0].components._normalized_city;
 
     const resWeather = await fetch(
-      `https://api.weatherapi.com/v1/forecast.json?key=${apiKeyForWeather}&q=${country}&days=3`
+      `https://api.weatherapi.com/v1/current.json?key=${apiKeyForWeather}&q=${country}&aqi=no`
     );
     const dataWeather = await resWeather.json();
     display(dataWeather);
@@ -45,7 +47,7 @@ input.addEventListener("input", (e) => {
 async function apiWeather(country) {
   try {
     const resWeather = await fetch(
-      `http://api.weatherapi.com/v1/forecast.json?key=${apiKeyForWeather}&q=${country}&days=3`
+      `https://api.weatherapi.com/v1/current.json?key=${apiKeyForWeather}&q=${country}&aqi=no`
     );
     const dataWeather = await resWeather.json();
     display(dataWeather);
