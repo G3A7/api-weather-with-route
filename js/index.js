@@ -17,6 +17,7 @@ async function getFirstWeather() {
       });
     }
     const { x, y } = await getLocationUser();
+    console.log(x,y)
 
     const resCountry = await fetch(
       `https://api.opencagedata.com/geocode/v1/json?q=${x}+${y}&key=${apiKeyForCountry}&language=en`
