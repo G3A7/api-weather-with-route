@@ -19,18 +19,22 @@ async function getFirstWeather() {
       });
     }
     const { x, y } = await getLocationUser();
-    console.log(x, y);
+    // console.log(x, y);
 
     const resCountry = await fetch(
       `https://api.opencagedata.com/geocode/v1/json?q=${x}+${y}&key=${apiKeyForCountry}&language=en`
     );
     const dataCountry = await resCountry.json();
-    const country = dataCountry.results[0].components._normalized_city;
+    // console.log(dataCountry.results[0].components);
+
+    const country = dataCountry?.results[0]?.components?.town;
+    // console.log(country);
 
     const resWeather = await fetch(
-      `https://api.weatherapi.com/v1/current.json?key=${apiKeyForWeather}&q=${country}&aqi=no`
+      `https://api.weatherapi.com/v1/forecast.json?key=363f0ee9576c4499974210006241012&q=${country}&days=3&aqi=no&alerts=no`
     );
     const dataWeather = await resWeather.json();
+    // console.log(dataWeather)
     display(dataWeather);
   } catch (err) {
     console.log("Ahmed1", err, "Ahmed1");
@@ -47,7 +51,7 @@ input.addEventListener("input", (e) => {
 async function apiWeather(country) {
   try {
     const resWeather = await fetch(
-      `https://api.weatherapi.com/v1/current.json?key=${apiKeyForWeather}&q=${country}&aqi=no`
+      `https://api.weatherapi.com/v1/forecast.json?key=363f0ee9576c4499974210006241012&q=${country}&days=3&aqi=no&alerts=no`
     );
     const dataWeather = await resWeather.json();
     display(dataWeather);
