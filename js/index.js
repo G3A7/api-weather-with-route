@@ -50,6 +50,7 @@ input.addEventListener("input", (e) => {
 });
 async function apiWeather(country) {
   try {
+    row.innerHTML = `  <div class="loader"></div>`;
     const resWeather = await fetch(
       `https://api.weatherapi.com/v1/forecast.json?key=363f0ee9576c4499974210006241012&q=${country}&days=3&aqi=no&alerts=no`
     );
