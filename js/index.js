@@ -103,7 +103,7 @@ function display(res) {
                 <span>${date.toString().split(" ")[2]} ${date.toString().split(" ")[1]}</span>
               </div>
               <div class="weather-content">
-              <span><b class=''text-white-50>country</b>:${res.location.country} </span>
+              <span><b class='text-white-50'>country</b>:${res.location.country} </span>
                 <h3>${res?.location?.name}</h3>
                 <h4 class="h1">${res?.current?.temp_c}<sup>o</sup>c</h4>
                 <div class="status">
