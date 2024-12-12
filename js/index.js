@@ -33,20 +33,20 @@ async function getFirstWeather() {
   try {
     const { x, y } = await getLocationUser();
     // console.log(x,y)
-    const resCountry = await fetch(
-      `https://api.opencagedata.com/geocode/v1/json?q=${x}+${y}&key=${apiKeyForCountry}&language=en`
-    );
+    // const resCountry = await fetch(
+    //   `https://api.opencagedata.com/geocode/v1/json?q=${x}+${y}&key=${apiKeyForCountry}&language=en`
+    // );
     // console.log(resCountry);
-    if (!resCountry.ok) {
-      throw new Error("Country Not Found");
-    }
-    const dataCountry = await resCountry.json();
+    // if (!resCountry.ok) {
+    //   throw new Error("Country Not Found");
+    // }
+    // const dataCountry = await resCountry.json();
 
-    const country = dataCountry?.results[0]?.components?.town
-      ? dataCountry?.results[0]?.components?.town
-      : dataCountry?.results[0]?.components?.state;
+    // const country = dataCountry?.results[0]?.components?.town
+    // ? dataCountry?.results[0]?.components?.town
+    // : dataCountry?.results[0]?.components?.state;
     const resWeather = await fetch(
-      `https://api.weatherapi.com/v1/forecast.json?key=363f0ee9576c4499974210006241012&q=${country}&days=3&aqi=no&alerts=no`
+      `https://api.weatherapi.com/v1/forecast.json?key=363f0ee9576c4499974210006241012&q=${x},${y}&days=3&aqi=no&alerts=no`
     );
     // console.log(resWeather);
     if (!resWeather.ok) {
