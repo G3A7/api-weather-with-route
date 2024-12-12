@@ -17,35 +17,27 @@ function getLocationUser() {
           y: position.coords.longitude,
         });
       });
-    } else {
-      console.log("Ahmed");
-      rej("cairo");
-      // apiWeather("cairo");
     }
   });
 }
-async function getFirstWeather(country='Manuf') {
-  try {
-    const { x, y } = await getLocationUser();
+async function getFirstWeather() {
+  const { x, y } = await getLocationUser();
 
-    const resCountry = await fetch(
-      `https://api.opencagedata.com/geocode/v1/json?q=${x}+${y}&key=${apiKeyForCountry}&language=en`
-    );
-    const dataCountry = await resCountry.json();
-    // console.log(dataCountry.results[0].components);
+  const resCountry = await fetch(
+    `https://api.opencagedata.com/geocode/v1/json?q=${x}+${y}&key=${apiKeyForCountry}&language=en`
+  );
+  const dataCountry = await resCountry.json();
+  // console.log(dataCountry.results[0].components);
 
-    const country = dataCountry?.results[0]?.components?.town;
-    // console.log(country);
+  const country = dataCountry?.results[0]?.components?.town;
+  // console.log(country);
 
-    const resWeather = await fetch(
-      `https://api.weatherapi.com/v1/forecast.json?key=363f0ee9576c4499974210006241012&q=${country}&days=3&aqi=no&alerts=no`
-    );
-    const dataWeather = await resWeather.json();
-    display(dataWeather);
-  } catch (err) {
-    console.log("location"+err);
-    apiWeather("cairo");
-  }
+  const resWeather = await fetch(
+    `https://api.weatherapi.com/v1/forecast.json?key=363f0ee9576c4499974210006241012&q=${country}&days=3&aqi=no&alerts=no`
+  );
+  console.log(resWeather);
+  const dataWeather = await resWeather.json();
+  display(dataWeather);
 }
 getFirstWeather();
 
