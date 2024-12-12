@@ -14,15 +14,6 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <!--
-      <i class="fa-solid fa-moon"></i>
-      <i class="fa-solid fa-umbrella"></i>
-      <i class="fa-solid fa-wind"></i>  رياح
-      <i class="fa-solid fa-compass"></i>
-      <i class="fa-solid fa-cloud"></i>
-      <i class="fa-solid fa-cloud-rain"></i>
-      <i class="fa-solid fa-cloud-sun"></i>
-      -->
     <nav class="navbar navbar-expand-lg py-4">
       <div class="container">
         <a class="navbar-brand d-flex align-items-center justify-content-center gap-2" href="#home">
@@ -75,7 +66,6 @@
               <input
                 type="text"
                 autocomplete="false"
-              
                 id="search"
                 placeholder="Enter Country ... "
                 class="form-control rounded-pill"
@@ -89,7 +79,7 @@
 
     <section class="weather">
       <div class="container position-relative">
-        <div class="row gy-2  custom-row">
+        <div class="row gy-2 custom-row">
           <div class="loader"></div>
         </div>
       </div>
@@ -126,36 +116,15 @@
             </div>
           </div>
         </div>
-      <div class="row mt-3">
-        <div class="col text-white-50">
-          <p>Copyright 2014 Company name. Designed by Themezy. All rights reserved</p>
+        <div class="row mt-3">
+          <div class="col text-white-50">
+            <p>Copyright 2014 Company name. Designed by Themezy. All rights reserved</p>
+          </div>
         </div>
       </div>
-      </div>
     </footer>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/index.js"></script>
   </body>
 </html>
-
-<!-- 
-
-/* HTML: <div class="loader"></div> */
-.loader {
-    width: 40px;
-    height: 40px;
-    --c:no-repeat linear-gradient(orange 0 0);
-    background: var(--c),var(--c),var(--c),var(--c);
-    background-size: 21px 21px;
-    animation: l5 1.5s infinite cubic-bezier(0.3,1,0,1);
-}
-@keyframes l5 {
-   0%   {background-position: 0    0,100% 0   ,100% 100%,0 100%}
-   33%  {background-position: 0    0,100% 0   ,100% 100%,0 100%;width:60px;height: 60px}
-   66%  {background-position: 100% 0,100% 100%,0    100%,0 0   ;width:60px;height: 60px}
-   100% {background-position: 100% 0,100% 100%,0    100%,0 0   }
-}
-
-
--->

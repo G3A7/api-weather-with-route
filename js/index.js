@@ -1,43 +1,64 @@
-//api Key  363f0ee9576c4499974210006241012
 const apiKeyForWeather = "363f0ee9576c4499974210006241012";
 const apiKeyForCountry = "398938bba1d540c5a36778155acea436";
 const row = document.querySelector(".custom-row");
 const input = document.querySelector("#search");
 const btnSearch = document.querySelector("#btn-search");
-// https://api.weatherapi.com/v1/current.json?key=363f0ee9576c4499974210006241012&q=London&aqi=no
+let flag = false;
+function reset() {
+  flag = false;
+}
 btnSearch.addEventListener("click", (e) => {
+  flag = true;
   apiWeather(input.value);
 });
 function getLocationUser() {
-  return new Promise((res) => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
+  return new Promise((res, rej) => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
         res({
           x: position.coords.latitude,
           y: position.coords.longitude,
         });
-      });
-    }
+      },
+      () => {
+        rej("Not Allowed me access Locations your please enable it 😊");
+      }
+    );
   });
 }
 async function getFirstWeather() {
-  const { x, y } = await getLocationUser();
+  try {
+    const { x, y } = await getLocationUser();
+// console.log(x,y)
+    const resCountry = await fetch(
+      `https://api.opencagedata.com/geocode/v1/json?q=${x}+${y}&key=${apiKeyForCountry}&language=en`
+    );
+    // console.log(resCountry);
+    if (!resCountry.ok) {
+      throw new Error("Country Not Found");
+    }
+    const dataCountry = await resCountry.json();
 
-  const resCountry = await fetch(
-    `https://api.opencagedata.com/geocode/v1/json?q=${x}+${y}&key=${apiKeyForCountry}&language=en`
-  );
-  const dataCountry = await resCountry.json();
-  // console.log(dataCountry.results[0].components);
-
-  const country = dataCountry?.results[0]?.components?.town;
-  // console.log(country);
-
-  const resWeather = await fetch(
-    `https://api.weatherapi.com/v1/forecast.json?key=363f0ee9576c4499974210006241012&q=${country}&days=3&aqi=no&alerts=no`
-  );
-  console.log(resWeather);
-  const dataWeather = await resWeather.json();
-  display(dataWeather);
+    const country = dataCountry?.results[0]?.components?.town
+      ? dataCountry?.results[0]?.components?.town
+      : dataCountry?.results[0]?.components?.state;
+    const resWeather = await fetch(
+      `https://api.weatherapi.com/v1/forecast.json?key=363f0ee9576c4499974210006241012&q=${country}&days=3&aqi=no&alerts=no`
+    );
+    // console.log(resWeather);
+    if (!resWeather.ok) {
+      throw new Error("not found country with name that enter you 😐");
+    }
+    const dataWeather = await resWeather.json();
+    display(dataWeather);
+  } catch (err) {
+    // console.log(err);
+    if (err.toString().includes("Error")) {
+      Swal.fire(err.toString().split(":")[1]);
+    } else {
+      Swal.fire(err);
+    }
+  }
 }
 getFirstWeather();
 
@@ -48,18 +69,28 @@ input.addEventListener("input", (e) => {
   }
 });
 async function apiWeather(country) {
-  row.innerHTML = `  <div class="loader"></div>`;
+  try {
+    row.innerHTML = `  <div class="loader"></div>`;
 
-  const resWeather = await fetch(
-    `https://api.weatherapi.com/v1/forecast.json?key=363f0ee9576c4499974210006241012&q=${country}&days=3&aqi=no&alerts=no`
-  );
-  const dataWeather = await resWeather.json();
-  // console.log(dataWeather)
-  if (!dataWeather.error) {
-    display(dataWeather);
+    const resWeather = await fetch(
+      `https://api.weatherapi.com/v1/forecast.json?key=363f0ee9576c4499974210006241012&q=${country}&days=3&aqi=no&alerts=no`
+    );
+    // console.log(resWeather);
+    if (resWeather.ok) {
+      const dataWeather = await resWeather.json();
+      console.log(dataWeather);
+      display(dataWeather);
+    }
+    if (flag) {
+      reset();
+      throw new Error("not found country with name that enter you 😐");
+    }
+  } catch (err) {
+    if(err.toString().includes("Error")){
+      Swal.fire(err.toString().split(":")[1]);
+    }
   }
 }
-// apiWeather("london");
 
 function display(res) {
   let date = new Date(res?.current?.last_updated);
@@ -128,113 +159,3 @@ function display(res) {
 
   row.innerHTML = blackBox;
 }
-
-// console.log(new Date("2024-12-11 00:30"));
-// let c = new Date("2024-12-11 00:30");
-
-// console.log(c.toString().split(' ')[1]);
-// console.log(c.toString().split(' ')[2]);
-// console.log(c.toString().split(' ')[0]);
-// (async function getAPi() {
-// const res = await fetch(
-//   "http://api.weatherapi.com/v1/forecast.json?key=&q=cairo&days=2"
-// );
-// const data = await res.json();
-// document
-//   .querySelector("#img")
-//   .setAttribute("src", `https:${data.forecast.forecastday[0].day.condition.icon}`);
-// console.log(data); // درحه الحراره الحاليه
-// console.log(data.forecast.forecastday[0].day.maxtemp_c);
-// console.log(data.forecast.forecastday[0].day.mintemp_c);
-// console.log(data.forecast.forecastday[0].day.condition.icon);
-// console.log(data.forecast.forecastday[0].day.condition.text);
-// api Key to detected country 398938bba1d540c5a36778155acea436
-// function promiseLocation() {
-//   let x, y;
-//   return new Promise((res) => {
-//     navigator.geolocation.getCurrentPosition((position) => {
-//       x = position.coords.latitude;
-//       y = position.coords.longitude;
-//       res({ x, y });
-//     });
-//   });
-// }
-// const { x, y } = await promiseLocation();
-// const res = await fetch(
-//   `https://api.opencagedata.com/geocode/v1/json?q=${x}+${y}&key=${api_key}&language=en`
-// );
-// const data = await res.json();
-// console.log(data);
-// console.log(data.results[0].components._normalized_city);
-// })();
-
-/*
-
- blackBox += `
-  <div class="col-md-4">
-            <div class="inner-weather">
-              <div class="weather-title d-flex justify-content-between p-2">
-                <span>Tuesday</span>
-                <span>10December</span>
-              </div>
-              <div class="weather-content">
-                <h3>Cairo</h3>
-                <h4 class="h1">22.1C</h4>
-                <div class="status">
-                  <img id="img" src="" class="w-100 d-block" alt="" />
-                </div>
-                <span>Sunny</span>
-                <div class="icons d-flex align-items-center gap-2">
-                  <div class="icon">
-                    <i class="fa-solid fa-umbrella"></i>
-                    <span>20%</span>
-                  </div>
-                  <div class="icon">
-                    <i class="fa-solid fa-wind"></i> 
-                    <span>20%</span>
-                  </div>
-                  <div class="icon">
-                    <i class="fa-solid fa-compass"></i>
-                    <span>20%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-  `;
-
- const default = await fetch(
-    `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${lat},${lon}&days=2`
-  );
-
- <div class="col-md-4">
-            <div class="inner-weather">
-              <div class="weather-title d-flex justify-content-between p-2">
-                <span>Tuesday</span>
-                <span>10December</span>
-              </div>
-              <div class="weather-content">
-                <h3>Cairo</h3>
-                <h4 class="h1">22.1C</h4>
-                <div class="status">
-                  <img id="img" src="" class="w-100 d-block" alt="" />
-                </div>
-                <span>Sunny</span>
-                <div class="icons d-flex align-items-center gap-2">
-                  <div class="icon">
-                    <i class="fa-solid fa-umbrella"></i>
-                    <span>20%</span>
-                  </div>
-                  <div class="icon">
-                    <i class="fa-solid fa-wind"></i> 
-                    <span>20%</span>
-                  </div>
-                  <div class="icon">
-                    <i class="fa-solid fa-compass"></i>
-                    <span>20%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-*/
