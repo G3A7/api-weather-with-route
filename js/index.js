@@ -22,6 +22,9 @@ function getLocationUser() {
       },
       () => {
         rej("Not Allowed me access Locations your please enable it 😊");
+      },
+      {
+        enableHighAccuracy: true, // This improves accuracy
       }
     );
   });
@@ -29,7 +32,7 @@ function getLocationUser() {
 async function getFirstWeather() {
   try {
     const { x, y } = await getLocationUser();
-// console.log(x,y)
+    // console.log(x,y)
     const resCountry = await fetch(
       `https://api.opencagedata.com/geocode/v1/json?q=${x}+${y}&key=${apiKeyForCountry}&language=en`
     );
@@ -86,7 +89,7 @@ async function apiWeather(country) {
       throw new Error("not found country with name that enter you 😐");
     }
   } catch (err) {
-    if(err.toString().includes("Error")){
+    if (err.toString().includes("Error")) {
       Swal.fire(err.toString().split(":")[1]);
     }
   }
