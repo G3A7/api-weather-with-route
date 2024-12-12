@@ -8,33 +8,34 @@ const btnSearch = document.querySelector("#btn-search");
 btnSearch.addEventListener("click", (e) => {
   apiWeather(input.value);
 });
+function getLocationUser() {
+  return new Promise((res) => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        res({
+          x: position.coords.latitude,
+          y: position.coords.longitude,
+        });
+      });
+    } else {
+      console.log("Ahmed");
+      rej("cairo");
+      // apiWeather("cairo");
+    }
+  });
+}
 async function getFirstWeather() {
   try {
-    function getLocationUser() {
-      return new Promise((res, rej) => {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition((position) => {
-            res({
-              x: position.coords.latitude,
-              y: position.coords.longitude,
-            });
-          });
-        } else {
-          rej("notfound");
-        }
-      });
-    }
     const { x, y } = await getLocationUser();
-    console.log(x, y);
 
     const resCountry = await fetch(
       `https://api.opencagedata.com/geocode/v1/json?q=${x}+${y}&key=${apiKeyForCountry}&language=en`
     );
     const dataCountry = await resCountry.json();
-    console.log(dataCountry.results[0].components);
+    // console.log(dataCountry.results[0].components);
 
     const country = dataCountry?.results[0]?.components?.town;
-    console.log(country);
+    // console.log(country);
 
     const resWeather = await fetch(
       `https://api.weatherapi.com/v1/forecast.json?key=363f0ee9576c4499974210006241012&q=${country}&days=3&aqi=no&alerts=no`
@@ -42,7 +43,7 @@ async function getFirstWeather() {
     const dataWeather = await resWeather.json();
     display(dataWeather);
   } catch (err) {
-    console.log("Ahmed1", err, "Ahmed1");
+    console.log("location"+err);
     apiWeather("cairo");
   }
 }
@@ -55,22 +56,21 @@ input.addEventListener("input", (e) => {
   }
 });
 async function apiWeather(country) {
-  try {
-    row.innerHTML = `  <div class="loader"></div>`;
-    const resWeather = await fetch(
-      `https://api.weatherapi.com/v1/forecast.json?key=363f0ee9576c4499974210006241012&q=${country}&days=3&aqi=no&alerts=no`
-    );
-    const dataWeather = await resWeather.json();
+  row.innerHTML = `  <div class="loader"></div>`;
+
+  const resWeather = await fetch(
+    `https://api.weatherapi.com/v1/forecast.json?key=363f0ee9576c4499974210006241012&q=${country}&days=3&aqi=no&alerts=no`
+  );
+  const dataWeather = await resWeather.json();
+  // console.log(dataWeather)
+  if (!dataWeather.error) {
     display(dataWeather);
-  } catch (err) {
-    console.log("Ahmed", err, "Ahmed");
   }
 }
 // apiWeather("london");
 
 function display(res) {
-  // console.log(res);
-  let date = new Date(res.current.last_updated);
+  let date = new Date(res?.current?.last_updated);
   let blackBox = "";
   blackBox += `
   <div class="col-md-4 dd">
@@ -80,36 +80,36 @@ function display(res) {
                 <span>${date.toString().split(" ")[2]} ${date.toString().split(" ")[1]}</span>
               </div>
               <div class="weather-content">
-                <h3>${res.location.name}</h3>
-                <h4 class="h1">${res.current.temp_c}<sup>o</sup>c</h4>
+                <h3>${res?.location?.name}</h3>
+                <h4 class="h1">${res?.current?.temp_c}<sup>o</sup>c</h4>
                 <div class="status">
                   <img id="img" src="https:${
-                    res.current.condition.icon
+                    res?.current?.condition?.icon
                   }" class="w-100 d-block" alt="" />
                 </div>
-                <span class='status-text mt-4'>${res.current.condition.text}</span>
+                <span class='status-text mt-4'>${res?.current?.condition?.text}</span>
                 <div class="icons d-flex mt-3 align-items-center gap-3">
                   <div class="icon">
                     <i class="fa-solid fa-umbrella"></i>
-                    <span>${res.forecast.forecastday[0].day.daily_chance_of_rain}%</span>
+                    <span>${res?.forecast?.forecastday[0]?.day?.daily_chance_of_rain}%</span>
                   </div>
                   <div class="icon">
                     <i class="fa-solid fa-wind"></i> 
-                    <span>${res.current.wind_kph}km/h</span>
+                    <span>${res?.current?.wind_kph}km/h</span>
                   </div>
                   <div class="icon">
                     <i class="fa-solid fa-compass"></i>
-                    <span>${res.current.wind_dir}</span>
+                    <span>${res?.current?.wind_dir}</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
   `;
-  let days = res.forecast.forecastday;
-  days = days.slice(1);
-  days.forEach((e, i) => {
-    let date = new Date(e.date);
+  let days = res?.forecast?.forecastday;
+  days = days?.slice(1);
+  days?.forEach((e, i) => {
+    let date = new Date(e?.date);
     date.toString().split(" ")[0];
     blackBox += `
     <div class="col-md-4 dd">
@@ -117,15 +117,17 @@ function display(res) {
                 <div class="weather-title ${
                   i == 0 ? "bg-card-t-2" : ""
                 } d-flex justify-content-center p-2">
-                  <span>${date.toString().split(" ")[0]}</span>
+                  <span>${date?.toString().split(" ")[0]}</span>
                 </div>
                 <div class="weather-content">
                 <div class="status my-5 mx-auto">
-                  <img id="img" src="https:${e.day.condition.icon}" class="w-100 d-block" alt="" />
+                  <img id="img" src="https:${
+                    e.day?.condition?.icon
+                  }" class="w-100 d-block" alt="" />
                 </div>
-                  <h5 class='c-h5'>${e.day.maxtemp_c}<sup>o</sup>c</h5>
-                  <h6 class='c-h6'>${e.day.mintemp_c}<sup>o</sup>c</h6>
-                  <span class='status-text'>${e.day.condition.text}</span>
+                  <h5 class='c-h5'>${e.day?.maxtemp_c}<sup>o</sup>c</h5>
+                  <h6 class='c-h6'>${e.day?.mintemp_c}<sup>o</sup>c</h6>
+                  <span class='status-text'>${e.day?.condition?.text}</span>
                 </div>
               </div>
             </div>
