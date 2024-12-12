@@ -14,6 +14,8 @@ body {
   /* font-family: sans-serif; */
   font-family: Roboto, "Open Sans", sans-serif;
   background-color: var(--main-color);
+  /* min-height: 110vh; */
+  /* position: relative; */
 }
 * {
   margin: 0;
@@ -112,7 +114,20 @@ a {
   padding: 0.9375rem;
   padding-right: 6.0625rem;
   background-color: var(--main-color);
-  color: #fff;
+  color: #fff !important;
+}
+input::placeholder , textarea::placeholder {
+  color: #ffffff61 !important;
+  font-size: 13px;
+}
+.contact-us .inner.iframe{
+  /* background-color: red; */
+  height: 350px;
+}
+.contact-us .inner iframe{
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .form > input:focus {
   box-shadow: none !important;
@@ -134,18 +149,22 @@ a {
 }
 
 .weather {
-  padding-block: 50px;
   color: #fff;
-  position: relative;
+  min-height: 60px; /*  */
   padding-inline: 0.625rem;
-
-  /* min-height: 50vh; */
 }
 
 .custom-row {
-  position: absolute;
-  width: 100%;
-  top: -180px;
+  position: relative;
+  /* width: 100%; */
+  top: -120px;
+}
+.dd {
+  /* background-color: red; */
+  height: 350px !important;
+}
+.dd > .inner-weather {
+  height: 100%;
 }
 .weather .inner-weather {
   background-color: var(--second-color);
@@ -170,13 +189,16 @@ a {
   color: rgb(191, 193, 200);
   font-weight: 400;
   line-height: 27px;
+  /* background-color: red; */
   font-size: 1.125rem;
 }
 .weather .inner-weather .weather-content h4 {
   font-weight: 700;
+  /* background-color: red; */
+
   font-size: 45px;
-  line-height: 95px;
   /* margin-left: 15px; */
+  /* line-height: 95px; */
 }
 .weather .inner-weather .weather-content > .status {
   width: 60px;
@@ -201,7 +223,57 @@ a {
   margin-bottom: 17px;
 }
 .bg-card-2 {
-  background-color: #1e202b !important;
+  background-color: #202334 !important;
+}
+.bg-card-t-2 {
+  background-color: #191a24 !important;
+}
+/* ----------------------------------------------------- */
+
+footer {
+  background-color: var(--color-footer);
+}
+.icon-cover {
+  width: 50px;
+  height: 50px;
+  background-color: var(--main-color);
+  /* background-color: red; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 25px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.icon-cover i {
+  color: var(--cyan);
+}
+.icon-cover:hover i {
+  color: #fff;
+}
+.icon-cover:hover {
+  background-color: var(--cyan);
+}
+.form-contact input,textarea {
+  border: 2px solid transparent !important;
+  box-shadow: none !important;
+  background-color: var(--color-footer) !important;
+}
+.form-contact input:focus ,textarea:focus  {
+  box-shadow: none !important;
+ border-color: (--cyan) !important;
+}
+.form-contact input:hover  ,textarea:hover  {
+  border-color: var(--cyan) !important;
+  /* box-shadow: none !important; */
+}
+/* ------------------------------------- */
+ul {
+  margin-bottom: 0;
+}
+.bg-contact {
+  background-color: var(--color-footer);
 }
 /* media Query */
 @media (min-width: 992px) {
@@ -220,10 +292,10 @@ a {
     background-color: transparent !important;
     border-radius: 5px !important;
   }
-  .weather .inner-weather .weather-content h4 {
+  /* .weather .inner-weather .weather-content h4 {
     font-size: 60px;
-    line-height: 135px;
-  }
+    line-height: 105px;
+  } */
 }
 
 /* break Point fo tailwind 
@@ -237,14 +309,26 @@ a {
   width: 40px;
   height: 40px;
   margin: auto;
-  --c:no-repeat linear-gradient(var(--cyan) 0 0);
-  background: var(--c),var(--c),var(--c),var(--c);
+  --c: no-repeat linear-gradient(var(--cyan) 0 0);
+  background: var(--c), var(--c), var(--c), var(--c);
   background-size: 21px 21px;
-  animation: l5 1.5s infinite cubic-bezier(0.3,1,0,1);
+  animation: l5 1.5s infinite cubic-bezier(0.3, 1, 0, 1);
 }
 @keyframes l5 {
- 0%   {background-position: 0    0,100% 0   ,100% 100%,0 100%}
- 33%  {background-position: 0    0,100% 0   ,100% 100%,0 100%;width:60px;height: 60px}
- 66%  {background-position: 100% 0,100% 100%,0    100%,0 0   ;width:60px;height: 60px}
- 100% {background-position: 100% 0,100% 100%,0    100%,0 0   }
+  0% {
+    background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+  }
+  33% {
+    background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+    width: 60px;
+    height: 60px;
+  }
+  66% {
+    background-position: 100% 0, 100% 100%, 0 100%, 0 0;
+    width: 60px;
+    height: 60px;
+  }
+  100% {
+    background-position: 100% 0, 100% 100%, 0 100%, 0 0;
+  }
 }

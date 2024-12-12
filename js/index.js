@@ -3,19 +3,25 @@ const apiKeyForWeather = "363f0ee9576c4499974210006241012";
 const apiKeyForCountry = "398938bba1d540c5a36778155acea436";
 const row = document.querySelector(".custom-row");
 const input = document.querySelector("#search");
-
+const btnSearch = document.querySelector("#btn-search");
 // https://api.weatherapi.com/v1/current.json?key=363f0ee9576c4499974210006241012&q=London&aqi=no
-
+btnSearch.addEventListener("click", (e) => {
+  apiWeather(input.value);
+});
 async function getFirstWeather() {
   try {
     function getLocationUser() {
-      return new Promise((res) => {
-        navigator.geolocation.getCurrentPosition((position) => {
-          res({
-            x: position.coords.latitude,
-            y: position.coords.longitude,
+      return new Promise((res, rej) => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition((position) => {
+            res({
+              x: position.coords.latitude,
+              y: position.coords.longitude,
+            });
           });
-        });
+        } else {
+          rej("notfound");
+        }
       });
     }
     const { x, y } = await getLocationUser();
@@ -34,10 +40,10 @@ async function getFirstWeather() {
       `https://api.weatherapi.com/v1/forecast.json?key=363f0ee9576c4499974210006241012&q=${country}&days=3&aqi=no&alerts=no`
     );
     const dataWeather = await resWeather.json();
-    // console.log(dataWeather)
     display(dataWeather);
   } catch (err) {
     console.log("Ahmed1", err, "Ahmed1");
+    apiWeather("cairo");
   }
 }
 getFirstWeather();
@@ -67,7 +73,7 @@ function display(res) {
   let date = new Date(res.current.last_updated);
   let blackBox = "";
   blackBox += `
-  <div class="col-md-4">
+  <div class="col-md-4 dd">
             <div class="inner-weather">
               <div class="weather-title d-flex justify-content-between p-2">
                 <span>${date.toString().split(" ")[0]}</span>
@@ -81,8 +87,8 @@ function display(res) {
                     res.current.condition.icon
                   }" class="w-100 d-block" alt="" />
                 </div>
-                <span class='status-text '>${res.current.condition.text}</span>
-                <div class="icons d-flex  align-items-center gap-1">
+                <span class='status-text mt-4'>${res.current.condition.text}</span>
+                <div class="icons d-flex mt-3 align-items-center gap-3">
                   <div class="icon">
                     <i class="fa-solid fa-umbrella"></i>
                     <span>${res.forecast.forecastday[0].day.daily_chance_of_rain}%</span>
@@ -106,15 +112,15 @@ function display(res) {
     let date = new Date(e.date);
     date.toString().split(" ")[0];
     blackBox += `
-    <div class="col-md-4">
+    <div class="col-md-4 dd">
               <div class="inner-weather ${i == 0 ? "bg-card-2" : ""} text-center">
                 <div class="weather-title ${
-                  i == 0 ? "bg-card-2" : ""
+                  i == 0 ? "bg-card-t-2" : ""
                 } d-flex justify-content-center p-2">
                   <span>${date.toString().split(" ")[0]}</span>
                 </div>
                 <div class="weather-content">
-                <div class="status w-25 my-5 mx-auto">
+                <div class="status my-5 mx-auto">
                   <img id="img" src="https:${e.day.condition.icon}" class="w-100 d-block" alt="" />
                 </div>
                   <h5 class='c-h5'>${e.day.maxtemp_c}<sup>o</sup>c</h5>
