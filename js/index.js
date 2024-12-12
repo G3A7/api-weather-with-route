@@ -24,7 +24,7 @@ function getLocationUser() {
     }
   });
 }
-async function getFirstWeather() {
+async function getFirstWeather(country='Manuf') {
   try {
     const { x, y } = await getLocationUser();
 
